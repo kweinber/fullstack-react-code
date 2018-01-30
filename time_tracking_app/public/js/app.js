@@ -1,22 +1,19 @@
 class TimersDashboard extends React.Component {
+
+  componentDidMount() {
+    this.loadTimersFromServer();
+    setInterval(this.loadTimersFromServer, 5000);
+  }
+
+  loadTimersFromServer = () => {
+    client.getTimers((serverTimers) => (
+      this.setState({timers: serverTimers})
+    ));
+  }
   state = {
-    timers: [
-      {
-        title: 'Practice squat',
-        project: 'Gym Chores',
-        id: uuid.v4(),
-        elapsed: 5456099,
-        runningSince: Date.now(),
-      },
-      {
-        title: 'Bake squash',
-        project: 'Kitchen Chores',
-        id: uuid.v4(),
-        elapsed: 1273990,
-        runningSince: null,
-      },
-    ]
+    timers:[],
   };
+
   handleCreateFormSubmit = (timer) => {
     this.createTimer(timer);
   };
